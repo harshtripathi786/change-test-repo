@@ -16,9 +16,19 @@ jobs:
       - name: Get changed files
         id: files
         run: |
-          git fetch --depth=2
-          echo "Changed files:"
-          git diff --name-only HEAD~1 HEAD > changed.txt
+          git fetch --depth=5
+          
+          commit_count=$(git rev-list --count HEAD)
+          echo "Total commits: $commit_count"
+
+          if [ "$commit_count" -eq 1 ]; then
+            echo "Only one commit found. Returning all files."
+            git ls-files > changed.txt
+          else
+            echo "Showing files changed in last commit:"
+            git diff --name-only HEAD~1 HEAD > changed.txt
+          fi
+
           cat changed.txt
 
       - name: Upload results
