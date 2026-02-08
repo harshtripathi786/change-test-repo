@@ -22,7 +22,7 @@ jobs:
           cat changed.txt
 
       - name: Upload results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: changed-files
           path: changed.txt
